@@ -8,6 +8,10 @@
 </p>
 
 
+
+
+
+
 <p align="center">
   <a href="#introduction"><strong>Introduction</strong></a> ·
   <a href="#tech-stack--features"><strong>Tech Stack + Features</strong></a> ·
@@ -22,7 +26,7 @@ Bot AI, or Artificial Intelligence Chatbot, represents a breakthrough in convers
 
  ## Tech Stack + Features
 
-https://github.com/Sumittecorb/ai-chat-bot/blob/main/public/ai_chat_bot_demo_video.mp4
+[https://github.com/Sumittecorb/ai-chat-bot/blob/main/public/ai_chat_bot_demo_video.mp4](https://github.com/Sumittecorb/ai-chat-bot/assets/105202084/cb6da63d-14fa-4dd4-b3a3-cf6a71a9db11)
 
 ### Frameworks
 
