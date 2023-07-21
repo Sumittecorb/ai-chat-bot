@@ -44,19 +44,21 @@ const IntroductionAni = () => {
             variants={introHeaderVariants}
           >
             <h1 className="text-white dark:text-black text-5xl animate-bounce xl:leading-tight lg:leading-tight md:leading-tight sm:leading-tight xl:text-5xl lg:text-4xl md:text-4xl sm:text-3xl max-[640px]:text-4xl max-[475px]:text-3xl ">
-              Introduction <br />
-              Boat Ai
+              Introduction to <br />
+              Bot AI
             </h1>
             <p className="text-white dark:text-black text-lg mt-5">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt
-              eveniet corporis repellendus facilis minima consectetur
-              cupiditate! Cumque, consectetur? Dolorem reprehenderit provident
-              incidunt aperiam deleniti! Excepturi repudiandae placeat eius
-              delectus laboriosam! Lorem ipsum dolor sit amet, consectetur
-              adipisicing elit. Incidunt eveniet corporis repellendus facilis
-              minima consectetur cupiditate! Cumque, consectetur? Dolorem
-              reprehenderit provident incidunt aperiam deleniti! Excepturi
-              repudiandae placeat eius delectus laboriosam!
+              Bot AI, or Artificial Intelligence Chatbot, represents a
+              breakthrough in conversational agents. By leveraging sophisticated
+              algorithms and NLP, these intelligent bots simulate human-like
+              conversations, providing users with natural language interactions.
+              From automating customer support to serving as virtual assistants,
+              Bot AI finds applications in various industries, transforming how
+              businesses engage with their customers and streamline processes.
+              As technology evolves, the potential for Bot AI to revolutionize
+              our daily lives and create more connected experiences continues to
+              grow, promising a future where AI-driven conversations become an
+              integral part of our digital interactions.
             </p>
             <div className="flex items-center justify-start mt-5 xsm:flex-wrap">
               <div className="border border-white dark:border-black pb-1 rounded-xl mr-5 mt-3 xsm:w-full xsm:mr-0">
