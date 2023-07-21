@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1.subscriptionHeading {
+    position: relative;
+}
+
+h1.subscriptionHeading::before {
+    content: "";
+    bottom: -10px;
+    height: 10px;
+    background: #e80909 0 0 no-repeat padding-box;
+    opacity: 1;
+    position: absolute;
+    left: 0px;
+    z-index: -1;
+    width: 100%;
+    margin: auto;
+    z-index: 1;
+}
+
+.custom-label input:checked+img {
+    display: block !important;
+}
+
+
+
+
+/* ////////////////////////Start Sidebar////////////////////////////////// */
+#sidebar {
+    --tw-translate-x: -100%;
+}
+
+#menu-close-icon {
+    display: none;
+}
+
+#menu-open:checked~#sidebar {
+    --tw-translate-x: 0;
+}
+
+#menu-open:checked~* #mobile-menu-button {
+    /* background-color: red; */
+}
+
+#menu-open:checked~* #menu-open-icon {
+    display: none;
+}
+
+#menu-open:checked~* #menu-close-icon {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    #sidebar {
+        --tw-translate-x: 0;
+    }
+}
+
+/* ////////////////////////End Sidebar////////////////////////////////// */
+
+
+
+/* ////////////////////////Start Phone Input////////////////////////////////// */
+
+.react-tel-input .form-control {
+    width: 100% !important;
+    background: #343734 !important;
+    height: 48px !important;
+    border: 1px solid #343734 !important;
+    color: white !important;
+}
+/* .react-tel-input .flag-dropdown {
+    position: absolute !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    padding: 0 !important;
+    background:#343734 !important;
+    border: none !important;
+    border-radius: 3px 0 0 3px !important;
+}
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag:focus {
+    background: #343734 !important;
+} */
+/* 
+.react-tel-input .selected-flag .flag {
+    z-index: 1;
+}
+
+.react-tel-input .form-control {
+    width: 80% !important;
+    position: absolute !important;
+    right: 0px !important;
+    padding-left: 10px !important;
+    font-weight: 700 !important;
+    font: 600 16px/20px Poppins !important;
+} */
+
+/* .react-tel-input .flag-dropdown {
+    height: 48px !important;
+    width: 17% !important;
+    border-radius: 8px !important;
+    background: #343734 !important;
+    border: none !important;
+}
+ */
+
+
+/* .react-tel-input .selected-flag {
+    width: 100% !important;
+} */
+
+/* .react-tel-input .selected-flag .arrow.up {
+    display: none !important;
+} */
+
+/* .react-tel-input .selected-flag .arrow {
+    display: none !important;
+} */
+
+/* .react-tel-input .selected-flag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    padding: 0px !important;
+    font: 600 16px/20px Poppins;
+    height: 50px;
+} */
+
+/* .react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag:focus {
+    border-radius: 8px !important;
+} */
+
+/* .special-label {
+    color: white !important;
+    margin-bottom: 10px !important;
+    display: none !important;
+} */
+
+@media screen and (max-width:575px) {
+    .react-tel-input .form-control {
+        font: 600 12px/20px Poppins !important;
+    }
+
+    .react-tel-input .selected-flag {
+        font: 600 12px/20px Poppins;
+        height: 50px;
+    }
+}
+
+/* ////////////////////////End Phone Input////////////////////////////////// */
+
+.blue-circle {
+    animation-delay: 0.1s;
+}
+
+.green-circle {
+    animation-delay: 0.2s;
+}
+
+.red-circle {
+    animation-delay: 0.3s;
+}

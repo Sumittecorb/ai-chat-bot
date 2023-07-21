@@ -1,0 +1,9 @@
+.animationContainer {
+    /* height: 500px; Adjust height as needed */
+    overflow-y: scroll;
+  }
+  
+  .animationItem {
+    margin: 0;
+    opacity: 0;
+  }
