@@ -26,7 +26,11 @@ Bot AI, or Artificial Intelligence Chatbot, represents a breakthrough in convers
 
  ## Tech Stack + Features
 
-[https://github.com/Sumittecorb/ai-chat-bot/blob/main/public/ai_chat_bot_demo_video.mp4](https://github.com/Sumittecorb/ai-chat-bot/assets/105202084/cb6da63d-14fa-4dd4-b3a3-cf6a71a9db11)
+
+
+https://github.com/Sumittecorb/ai-chat-bot/assets/105202084/70cbfedc-f1d7-4548-880f-757f4a44df4d
+
+
 
 ### Frameworks
 
