@@ -15,15 +15,14 @@ const ChatAssistance = () => {
               present chat assistant
             </h1>
             <p className="text-black dark:text-white text-lg mt-5 font-light font-['Poppins'] lg:text-lg sm:text-[16px] xs:text-[15px]">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt
-              eveniet corporis repellendus facilis minima consectetur
-              cupiditate! Cumque, consectetur? Dolorem reprehenderit provident
-              incidunt aperiam deleniti! Excepturi repudiandae placeat eius
-              delectus laboriosam! Lorem ipsum dolor sit amet, consectetur
-              adipisicing elit. Incidunt eveniet corporis repellendus facilis
-              minima consectetur cupiditate! Cumque, consectetur? Dolorem
-              reprehenderit provident incidunt aperiam deleniti! Excepturi
-              repudiandae placeat eius delectus laboriosam!
+              Welcome to our state-of-the-art chat assistant! We are delighted
+              to have you here. Our present chat assistant is equipped with
+              cutting-edge technology to offer you prompt and informative
+              responses. Whether you need assistance, have questions, or simply
+              want to engage in a conversation, our chat assistant is here to
+              ensure a seamless and enjoyable experience. Feel free to explore
+              and ask anything you desire, as we embark on an exciting journey
+              of knowledge and discovery together!
             </p>
           </LeftToRightAnimate>
           <RightToLeftAnimate className="col-span-2 flex items-center justify-center max-h-[500px] lg:col-span-2 md:col-span-2 sm:col-span-2 xs:max-h-[300px] xss:max-h-[250px]">
