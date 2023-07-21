@@ -1,5 +1,5 @@
 <a href="https://aichatbot-web.vercel.app/">
-  <img alt="AI Chat Bot" src="https://github.com/Sumittecorb/ai-chat-bot/tree/main/public/ai-chat-bot.png">
+  <img alt="AI Chat Bot" src="https://github.com/Sumittecorb/ai-chat-bot/blob/main/public/ai-chat-bot.png">
   <h1 align="center">AI Chat Bot</h1>
 </a>
 
@@ -22,7 +22,7 @@ Bot AI, or Artificial Intelligence Chatbot, represents a breakthrough in convers
 
  ## Tech Stack + Features
 
-https://github.com/Sumittecorb/ai-chat-bot/tree/main/public/ai_chat_bot_demo_video.mov
+https://github.com/Sumittecorb/ai-chat-bot/blob/main/public/ai_chat_bot_demo_video.mov
 
 ### Frameworks
 
