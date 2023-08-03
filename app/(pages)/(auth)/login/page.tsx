@@ -5,12 +5,18 @@ import { useForm, RegisterOptions } from "react-hook-form";
 import "react-phone-input-2/lib/style.css";
 import { isValidNumber } from "libphonenumber-js";
 import { sendOtp } from "@/firebase/otp";
-import { CheckUserService } from "@/components/helper/services/authServices";
-import { useState } from "react";
+import {
+  CheckUserService,
+  loginService,
+} from "@/components/helper/services/authServices";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { setCookies } from "@/components/helper/cookies_setup";
 import { Routes } from "@/components/Routes";
 import PhoneNumber from "@/components/PhoneInput/page";
+// const Dynamic_import = dynamic(() => import("@/firebase/dynamicImport"), {
+//   ssr: false,
+// });
 type FormValues = {
   phoneNumber: string;
   countryCode: string;
@@ -56,6 +62,9 @@ const Login = () => {
       }
     }
   };
+  const onError = (data: FormValues) => {
+    // Handle form submission
+  };
   const handleChange = (phone: any, phoneData: any, x: any) => {
     let pNumber = phone;
     let count = phoneData?.dialCode?.length;
@@ -85,12 +94,23 @@ const Login = () => {
     required: { value: true, message: "Phone number is required" },
     validate: validatePhoneNumbers,
   };
+  const getFlagValue = () => {
+    let countryName: any = getValues("countryName");
+    let countryCode: any = getValues("countryCode");
+
+    let flagName =
+      countryCode && countryName
+        ? `(${getValues("countryName")}) +${getValues("countryCode")} `
+        : "(IN)+91";
+
+    return flagName;
+  };
 
   return (
     <AuthLayout>
       <div id="sign-in-button"></div>
       <div className="w-full">
-        <p className="text-dark-secondary text-md mb-4 mobile:mt-5 leading-8 font-['Poppins'] font-medium  xxxs:text-[15px] xxxs:leading-5">
+        <p className="text-dark-secondary text-md mb-4 mobile:mt-5 leading-8 font-['Poppins'] font-medium  xxxs:text-sm xxxs:leading-5">
           {error}
         </p>
         <form className="rounded pt-6 pb-8 mb-4">
@@ -100,7 +120,18 @@ const Login = () => {
               onChange={handleChange}
               countryCodeEditable={true}
               prefix="+"
+              // renderStringAsFlag={getFlagValue()}
             />
+            {/* <PhoneInput
+              {...register("phoneNumber", phoneNumberValidation)}
+              onChange={handleChange}
+              prefix="+"
+              country="in"
+              countryCodeEditable={true}
+              renderStringAsFlag={getFlagValue()}
+            // showDropdown={true}
+            // placeholder={placeholder}
+            /> */}
           </div>
           <p className="font-['Poppins'] text-dark-secondary">
             {errors.phoneNumber?.message}
@@ -110,7 +141,7 @@ const Login = () => {
             <div className="justify-center flex">
               <Button
                 className={
-                  "bg-black dark:bg-white flex items-center justify-center font-bold text-white dark:text-black border border-black w-full p-3 rounded-tl-[9px] rounded-tr-[9px] rounded-xl dark:m-[-1px] dark:border-1 dark:border-white"
+                  "bg-black dark:bg-white flex items-center justify-center font-bold text-white dark:text-black border border-black w-full p-3 rounded-tl-lg rounded-tr-lg rounded-xl dark:m-[-1px] dark:border-1 dark:border-white"
                 }
                 text="Log in"
                 onClick={handleSubmit(onSubmit)}
@@ -119,6 +150,8 @@ const Login = () => {
               />
             </div>
           </div>
+          {/* <OrLine /> */}
+          {/* <SocialAuth /> */}
         </form>
       </div>
     </AuthLayout>

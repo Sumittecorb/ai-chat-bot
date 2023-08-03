@@ -1,3 +1,5 @@
+'use client'
+
 import Avatar from "@/components/Avatar/page";
 import Button from "@/components/Button/page";
 import { createSessionService } from "@/components/helper/services/chat.services";

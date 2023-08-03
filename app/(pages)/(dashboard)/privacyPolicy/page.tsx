@@ -5,15 +5,15 @@ const PrivacyPolicy = () => {
   return (
     <DashboardHeading heading="Privacy Policy">
      
-        <div className="bg-white dark:bg-[#232323] px-5 py-5 mt-10">
-          <p className="text-black dark:text-white font-['Poppins'] text-lg tablet:text-[16px] xxxs:text-[14px]">
+        <div className="bg-white dark:bg-themeBg px-5 py-5 mt-10">
+          <p className="text-black dark:text-white font-['Poppins'] text-lg tablet:text-base xxxs:text-sm">
             Welcome to our AI Chat Application! These Terms and Conditions
             outline the rules and regulatios for the use of our services. By
             accessing or using our AI Chat Application , You agree to comply
             with these Terms and Conditions. Plesae read them carefully before
             using our services.
           </p>
-          <ol className="text-black dark:text-white font-['Poppins'] text-lg tablet:text-[16px] xxxs:text-[14px]">
+          <ol className="text-black dark:text-white font-['Poppins'] text-lg tablet:text-base xxxs:text-sm">
             <li className="flex items-baseline leading-8 mt-3">
               <p className="mr-3">1</p>Acceptance of Termsa
             </li>

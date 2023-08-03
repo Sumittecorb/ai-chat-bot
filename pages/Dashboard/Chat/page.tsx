@@ -2,6 +2,7 @@
 import Avatar from "@/components/Avatar/page";
 import { UserContext } from "@/components/context";
 import {
+  chatHistoryService,
   countMessageService,
   createSessionService,
   messageChatHistoryService,
@@ -15,6 +16,7 @@ import {
 } from "@/typescript/interface/chat.interface";
 import { chatCompletion } from "@/utils/api";
 import { useParams } from "next/navigation";
+import DownLoadModal from "@/components/Modal/downloadModal";
 import React, {
   Fragment,
   useContext,
@@ -27,6 +29,7 @@ import ChatHeader from "./Header";
 import MessageLoading from "./MessageLoader";
 import RecieveMessage from "./RecieverMessage";
 import SenderMessage from "./SenderMessage";
+import { LightImage } from "@/components/Images/page";
 const messageType = {
   answer: "answer",
   question: "question",
@@ -39,6 +42,7 @@ const Chat = () => {
   const [onRequest, setOnRequest] = useState(false);
   const [chatLoad, setChatLoad] = useState(false);
   const [onMsgCount, setOnMsgCount] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [question, setQuestion] = useState("");
   const [messages, setMessages] = useState<any>([]);
@@ -57,6 +61,8 @@ const Chat = () => {
     setChatLoad(false);
   };
   let userData: any = UserContext();
+  let contextMode: any = UserContext();
+
   const checkCounts = async () => {
     let countValidation: any = await countMessageService();
     if (countValidation?.response?.data?.code === 401) {
@@ -65,7 +71,10 @@ const Chat = () => {
       getAnswer();
       setOnMsgCount(true);
     } else {
-      if (userData?.userData?.subscription && userData?.userData?.perDayMessageCount<10) {
+      if (
+        contextMode.isSubscription &&
+        userData?.userData?.perDayMessageCount < 10
+      ) {
         getAnswer();
       } else if (
         countValidation.data < 10 &&
@@ -78,9 +87,11 @@ const Chat = () => {
     }
   };
   useEffect(() => {
-
-    if (!userData?.userData?.subscription && userData?.userData?.perDayMessageCount>=10) {
-      setOnMsgCount(true)
+    if (
+      !contextMode.isSubscription &&
+      userData?.userData?.perDayMessageCount >= 10
+    ) {
+      setOnMsgCount(true);
     }
   }, [userData]);
 
@@ -171,7 +182,6 @@ const Chat = () => {
     //     setUpdatedMessages([]);
     //   }
     // });
-
   }, [updatedMessagesData]);
   useEffect(() => {
     scrollToBottom();
@@ -183,12 +193,52 @@ const Chat = () => {
       block: "end",
     });
   };
+  const convertToCsv = () => {
+    const keys = Object.keys(messages[0]);
+    const replacer = (_key: any, value: any) => (value === null ? "" : value);
+    const processRow = (row: any) =>
+      keys.map((key) => JSON.stringify(row[key], replacer)).join(",");
+    let data = [keys.join(","), ...messages.map(processRow)].join("\r\n");
+    console.log(data);
+    downloadFile(data);
+    return data;
+  };
 
+  const downloadFile = (data: any) => {
+    var link = document.createElement("a");
+    link.setAttribute(
+      "href",
+      "data:text/plain;charset=utf-8," + encodeURIComponent(data)
+    );
+    link.setAttribute("download", "data.txt");
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   return (
     <Fragment>
-      {
-        onMsgCount && <span className="text-dark-secondary relative bottom-6">Pls take subscription for more benefits</span>
-      }
+      <button
+        onClick={() => {
+          setIsOpen(true);
+        }}
+        className="ml-3 mt-14 mr-8 float-right"
+      >
+        <Avatar
+          path={LightImage.whiteDownloadIcon}
+          className="w-7 tablet:w-4"
+        />
+      </button>
+      <DownLoadModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        messages={messages}
+      />
+      {onMsgCount && (
+        <span className="text-dark-secondary relative bottom-6">
+          Pls take subscription for more benefits
+        </span>
+      )}
       <ChatHeader
         title={messages?.length > 0 && messages[0]?.message}
         chatLoad={chatLoad}

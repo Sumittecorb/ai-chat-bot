@@ -16,6 +16,14 @@ export const createSessionService = async (data?: any, _token?: any) => {
   return response;
 };
 
+export const deleteSessionService = async (sessionId?: any, _token?: any) => {
+  let response = await Http.get(
+    VERSION + API_URL.DELETE_CHAT_SESSION+sessionId,
+    _token
+  );
+  return response;
+};
+
 export const sendMessageService = async (data: any, _token?: any) => {
   let response = await Http.post(VERSION + API_URL.SEND_MESSAGE, data, _token);
   return response;
@@ -74,3 +82,13 @@ export const countMessageService = async (data?: any, _token?: any) => {
   let response = await Http.get(VERSION + API_URL.MESSAGE_COUNT, {}, _token);
   return response;
 };
+
+// *******************   CHANGE PDF FORMATE ************************
+export const userMessagePdfService = async (sessionId?: any, _token?: any) => {
+  let response = await Http.get(
+    VERSION + API_URL.MESSAGE_PDF+sessionId,
+    _token
+  );
+  return response;
+};
+

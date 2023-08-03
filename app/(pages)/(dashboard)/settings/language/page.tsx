@@ -4,7 +4,7 @@ import { DarkImage, LightImage } from "@/components/Images/page";
 
 const ChangeLanguage = () => {
   return (
-    <div className="bg-white dark:bg-[#232323] px-5 py-5 mt-10 w-[90%] xl:w-[90%] lg:w-[90%] md:w-full mobileView:w-[100%] rounded-2xl">
+    <div className="bg-white dark:bg-themeBg px-5 py-5 mt-10 w-[90%] xl:w-[90%] lg:w-[90%] md:w-full mobileView:w-full rounded-2xl">
       <h1 className="text-black dark:text-white font-['Poppins'] text-xl xs:text-xl xss:text-md mb-5">
         Change Language
       </h1>

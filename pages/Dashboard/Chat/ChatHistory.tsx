@@ -1,6 +1,6 @@
 "use client";
 import Avatar from "@/components/Avatar/page";
-import { chatHistoryService } from "@/components/helper/services/chat.services";
+import { deleteSessionService } from "@/components/helper/services/chat.services";
 import { ImagePath, LightImage } from "@/components/Images/page";
 import {
   ChatHistoryData,
@@ -9,18 +9,18 @@ import {
 import { formattedDate } from "@/utils/methods/page";
 import { useRouter } from "next/navigation";
 import React, { FC, Fragment, useEffect, useMemo, useState } from "react";
-interface ChatData{
-  chatListData:any
+import { date } from "yup";
+interface ChatData {
+  chatListData: any;
 }
-const ChatHistory: FC<ChatData>= ({chatListData}) => {
- 
+const ChatHistory: FC<ChatData> = ({ chatListData }) => {
   const [chathistoryFormat, setChatHistoryFormat] = useState<
     ChatHistoryUpdateData[]
   >([]);
   const { push } = useRouter();
-//  useEffect(() => {
-//     chatHistoryService(dispatch);
-//   }, []);
+  //  useEffect(() => {
+  //     chatHistoryService(dispatch);
+  //   }, []);
   const chatHistoryList = async () => {
     // let chatHistory: ChatHistory = await chatHistoryService();
     // if ((chatHistory.code = 200)) {
@@ -41,34 +41,48 @@ const ChatHistory: FC<ChatData>= ({chatListData}) => {
     // }
   };
   const formattedData = () => {
-    const formattedData = chatListData && chatListData?.reduce((acc: any, obj: any) => {
-      const date = formattedDate(obj.date);
-      if (!acc[date]) {
-        acc[date] = {
-          date,
-          newData: [],
-        };
-      }
-      acc[date].newData.push(obj);
+    const formattedData =
+      chatListData &&
+      chatListData?.reduce((acc: any, obj: any) => {
+        const date = formattedDate(obj.date);
+        if (!acc[date]) {
+          acc[date] = {
+            date,
+            newData: [],
+          };
+        }
+        acc[date].newData.push(obj);
 
-      return acc;
-    }, {});
+        return acc;
+      }, {});
 
     const result: ChatHistoryUpdateData[] = Object.values(formattedData);
     return result;
   };
+  const deleteSession = async (_id: string) => {
+    const deleteChatSession = await deleteSessionService(_id);
+    const result = chathistoryFormat.map((chatData) => {
+      return {
+        ...chatData,
+        newData: chatData.newData.filter((data) => data._id !== _id),
+        date: chatData.newData.some((data) => data._id === _id) ? "" : chatData.date
+      };
+    });
+    if (deleteChatSession.code === 200) {
+      setChatHistoryFormat(result);
+    }
+  };
   // const chatMemoData = (formattedData:any) => {
   //   setChatHistoryFormat(Object.values(formattedData()))
   //   };
-  
-    // useMemo(() => chatMemoData(formattedData), [chatListData])  
-    useEffect(()=>{
-       if(chatListData){
-        setChatHistoryFormat(Object.values(formattedData()))
-       }
-    },[chatListData])
 
-    return (
+  // useMemo(() => chatMemoData(formattedData), [chatListData])
+  useEffect(() => {
+    if (chatListData) {
+      setChatHistoryFormat(Object.values(formattedData()));
+    }
+  }, [chatListData]);
+  return (
     <Fragment>
       {chathistoryFormat.map((_data: ChatHistoryUpdateData) => {
         const { date, newData } = _data;
@@ -81,20 +95,23 @@ const ChatHistory: FC<ChatData>= ({chatListData}) => {
               const { _id, title } = _chatData;
               if (!title) return null;
               return (
-                <button
-                  onClick={() => push(`/chat/${_id}`)}
-                  className="bg-white dark:bg-[#2f2b2b] mt-5 text-black dark:text-white font-medium font-['Poppins'] w-full flex items-center justify-between h-14 px-5 rounded-xl tablet:px-3 tablet:h-10"
-                >
-                  <div className="flex items-center">
+                <button className="bg-white dark:bg-[#2f2b2b] mt-5 text-black dark:text-white font-medium font-['Poppins'] w-full flex items-center justify-between h-14 px-3 rounded-xl tablet:px-3 tablet:h-10">
+                  <div
+                    className="flex items-center"
+                    onClick={() => push(`/chat/${_id}`)}
+                  >
                     <Avatar
                       path={LightImage.whiteChat}
                       className="mr-3 w-7 tablet:w-4"
                     />
-                    <span className="truncate tablet:text-[14px]">{title}</span>
+                    <span className="truncate tablet:text-sm">{title}</span>
                   </div>
                   <Avatar
-                    path={LightImage.whiteDownload}
-                    className="mr-3 w-7 tablet:w-4"
+                    path={ImagePath.DeleteIcon}
+                    className="w-5 tablet:w-4"
+                    onClick={() => {
+                      deleteSession(_id);
+                    }}
                   />
                 </button>
               );

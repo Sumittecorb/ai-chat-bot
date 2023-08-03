@@ -7,9 +7,15 @@ const Button: FC<{
   id?: string;
   isLoading?: boolean;
   disabled?: boolean;
-}> = ({ className, text, onClick, id, isLoading, disabled }) => {
+
+  
+}> = ({ className, text, onClick, id, isLoading,disabled }) => {
   return (
     <>
+      {/* <button id={id} className={className} onClick={onClick}>
+        {text}
+      </button> */}
+      {/* <div className="flex items-center justify-center"> */}
       <button
         type="button"
         className={className}
@@ -45,6 +51,7 @@ const Button: FC<{
           text
         )}
       </button>
+      {/* </div> */}
     </>
   );
 };

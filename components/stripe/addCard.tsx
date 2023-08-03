@@ -1,20 +1,30 @@
-import React, { FC, useState } from "react";
+'use client'
+import React, { Component, FC, useContext, useState } from "react";
 import {
   CardNumberElement,
   CardExpiryElement,
   CardCvcElement,
+  CardElement,
   useElements,
 } from "@stripe/react-stripe-js";
 import { ErrorMessage } from "@/utils/Constants/errorMessage";
 import Button from "../Button/page";
 import Avatar from "../Avatar/page";
 import Input from "../Input/page";
-import { customerSourceService } from "../helper/services/paymentService";
+import {
+  customerPaymentIntentService,
+  customerSourceService,
+} from "../helper/services/paymentService";
 import { getCook } from "../helper/cookies_setup";
 import { SESSION_TOKEN } from "../common/constant";
-import { ImagePath, LightImage } from "../Images/page";
+import { DarkImage, ImagePath, LightImage } from "../Images/page";
 import { UserContext } from "../context";
-
+import { useTheme } from "next-themes";
+const Style = {
+  width: "25%",
+  marginTop: "-7px",
+  marginLeft: "40px",
+};
 const style_Add_Btn: any = {
   paddingTop: "0px",
   paddingBottom: "0px",
@@ -28,6 +38,7 @@ const customStyle = {
     height: "76px",
     iconColor: "#c4f0ff",
     color: "#a6bcd0",
+    // font: "400 30px/30px Poppins-Regular",
     fontWeight: 600,
     fontFamily: "Quicksand, Open Sans, Segoe UI, sans-serif",
     fontSize: "18px",
@@ -40,6 +51,7 @@ const customStyle = {
       color: "#ffff",
     },
     ":-webkit-text-security": "desc",
+    // WebkitTextSecurity: "disc"
   },
   invalid: {
     iconColor: "#ff0019",
@@ -74,6 +86,8 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
   setMode,
   customerId,
 }) => {
+  const subscriptionAmount = UserContext();
+  const { systemTheme, theme, setTheme } = useTheme();
   const [cardNumber, setCardNumber] = useState({
     empty: false,
     complete: false,
@@ -96,6 +110,8 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
   });
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrors] = useState("");
+  const [isError, setIsError] = useState(false);
+  console.log(cardMode, "ddd");
   const onchangeCardNumberElement = (number: any) => {
     let detail_empty = number.empty;
     let detail_complete = number.complete;
@@ -213,6 +229,7 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
       });
     }
   };
+  let element = useElements();
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -261,6 +278,15 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
       };
       const customeSorce = await customerSourceService(payload, session_token);
       if (customeSorce.code == 201) {
+        // const paymentIntent = await customerPaymentIntentService({customerId,
+        //   cardAttachedID:customeSorce.data?.id,
+        // amount:subscriptionAmount})
+        //  if(paymentIntent.code==200){
+        //   const paymentRes = await stripe.confirmCardPayment(`${paymentIntent.data?.id}`, {
+        //     return_url: "https://xyz.com/",
+        //   });
+
+        //  }
         let arr = [];
         arr.push(...cards, customeSorce.data);
         setCards(arr);
@@ -284,9 +310,13 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
       });
     }
     if (cardExpiryElement) {
+      // cardExpiryElement.destroy();
+      // cardExpiryElement.mount();
       cardExpiryElement.clear();
     }
     if (cardCVVElement) {
+      // cardCVVElement.destroy();
+      // cardCVVElement.mount();
       cardCVVElement.clear();
     }
 
@@ -300,6 +330,7 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
 
   return (
     <>
+      {/* <CardHeading /> */}
       <form className="w-full">
         {errorMsg && (
           <div
@@ -309,11 +340,63 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
             {errorMsg}
           </div>
         )}
-
+        {/* <PaymentElement /> */}
+        {/* <div className="text-black dark:text-white font-['Poppins'] inline-flex flex-wrap">
+          <label
+            htmlFor="debit"
+            className="flex items-center cursor-pointer py-2 px-2"
+          >
+            <input
+              type="radio"
+              id="debit"
+              value="Debit"
+              name="Card"
+              className="hidden peer"
+              onChange={(e) => {
+                setMode(e.target.value);
+              }}
+              checked={cardMode == "Debit"}
+            />
+            <Avatar
+              path={ImagePath.selectRadio}
+              className="w-7 hidden peer-checked:block"
+            />
+            <Avatar
+              path={ImagePath.unSelectRadio}
+              className="w-7 block peer-checked:hidden"
+            />
+            <span className="ml-3">Debit Card</span>
+          </label>
+          <label
+            htmlFor="credit"
+            className="flex items-center cursor-pointer py-2 px-2"
+          >
+            <input
+              type="radio"
+              id="credit"
+              value="Credit"
+              name="Card"
+              onChange={(e) => {
+                setMode(e.target.value);
+              }}
+              className="hidden peer"
+              checked={cardMode == "Credit"}
+            />
+            <Avatar
+              path={ImagePath.selectRadio}
+              className="w-7 hidden peer-checked:block"
+            />
+            <Avatar
+              path={ImagePath.unSelectRadio}
+              className="w-7 block peer-checked:hidden"
+            />
+            <span className="ml-3">Credit Card</span>
+          </label>
+        </div> */}
         <div className="grid grid-cols-1 gap-4">
           <div className="mb-7 relative">
             <label
-              className="block text-[#000000c9] dark:text-[#ffffff63] text-md mobileView:text-md font-semibold mb-2 font-['Poppins'] "
+              className="block text-addCardText dark:text-quesColor text-md mobileView:text-md font-semibold mb-2 font-['Poppins'] "
               htmlFor="email"
             >
               Card Number
@@ -321,7 +404,7 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
             <CardNumberElement
               className={`"w-full placeholder:black dark:placeholder-white rounded-md font-['Poppins']
                       leading-tight py-2 px-3 focus:outline-none 
-                      focus:shadow-outline h-12 bg-white dark:bg-[#343734] border-2 dark:border-none border-[#b9bcb56b] text-black dark:text-white xxs:text-[14px]"
+                      focus:shadow-outline h-12 bg-white dark:bg-inputbg border-2 dark:border-none border-lightBorder text-black dark:text-white xxs:text-sm"
                     `}
               onChange={onchangeCardNumberElement}
               options={{
@@ -342,7 +425,7 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
 
         <div className="mb-7 relative">
           <label
-            className="block text-[#000000c9] dark:text-[#ffffff63] text-md mobileView:text-md font-semibold mb-2 font-['Poppins'] "
+            className="block text-addCardText dark:text-quesColor text-md mobileView:text-md font-semibold mb-2 font-['Poppins'] "
             htmlFor="email"
           >
             Expire Date
@@ -350,7 +433,7 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
           <CardExpiryElement
             className={`              className="w-full placeholder:black dark:placeholder-white rounded-md font-['Poppins']
                       leading-tight py-2 px-3 focus:outline-none 
-                      focus:shadow-outline h-12 bg-white dark:bg-[#343734] border-2 dark:border-none border-[#b9bcb56b] text-black dark:text-white xxs:text-[14px]"`}
+                      focus:shadow-outline h-12 bg-white dark:bg-inputbg border-2 dark:border-none border-lightBorder text-black dark:text-white xxs:text-sm"`}
             onChange={(card) => onchangeCardExpiryElement(card)}
             options={{
               classes: {
@@ -368,7 +451,7 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
 
         <div className="mb-7 relative">
           <label
-            className="block text-[#000000c9] dark:text-[#ffffff63] text-md mobileView:text-md font-semibold mb-2 font-['Poppins'] "
+            className="block text-addCardText dark:text-quesColor text-md mobileView:text-md font-semibold mb-2 font-['Poppins'] "
             htmlFor="email"
           >
             CVV/CVC
@@ -376,7 +459,7 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
           <CardCvcElement
             className={`              className="w-full placeholder:black dark:placeholder-white rounded-md font-['Poppins']
                       leading-tight py-2 px-3 focus:outline-none 
-                      focus:shadow-outline h-12 bg-white dark:bg-[#343734] border-2 dark:border-none border-[#b9bcb56b] text-black dark:text-white xxs:text-[14px]"
+                      focus:shadow-outline h-12 bg-white dark:bg-inputbg border-2 dark:border-none border-lightBorder text-black dark:text-white xxs:text-sm"
                     `}
             onChange={(card) => onchangeCardCVVElement(card)}
             options={{
@@ -389,7 +472,7 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
         </div>
         <div className="mb-7 relative">
           <label
-            className="block text-[#000000c9] dark:text-[#ffffff63] text-md mobileView:text-md font-semibold mb-2 font-['Poppins'] "
+            className="block text-addCardText dark:text-quesColor text-md mobileView:text-md font-semibold mb-2 font-['Poppins'] "
             htmlFor="email"
           >
             Cardholder Name
@@ -401,22 +484,24 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
             onChange={handleCardHolderName}
             className="w-full placeholder:black dark:placeholder-white rounded-md font-['Poppins']
                                       leading-tight py-2 px-5 focus:outline-none 
-                                      focus:shadow-outline h-12 bg-white dark:bg-[#343734] border-2 dark:border-none border-[#b9bcb56b] text-black dark:text-white xxs:text-[14px]"
+                                      focus:shadow-outline h-12 bg-white dark:bg-inputbg border-2 dark:border-none border-lightBorder text-black dark:text-white xxs:text-sm"
           />
-          <Avatar
-            path={LightImage.whiteUserIcon}
-            className="absolute w-4 bottom-[13px] right-2"
-          />
+          <Avatar path={(theme === "light" ? DarkImage.darkUser : LightImage.whiteUserIcon)} className="absolute w-4 bottom-3 right-2" />
         </div>
         <label className="custom-label flex p-2">
           <div className="bg-white shadow w-6 h-5 rounded-md xxs:h-4 mt-[5px] p-1 flex justify-center items-center mr-2 relative">
-            <Input type="checkbox" placeholder="" className="hidden" />
+            <Input
+              type="checkbox"
+              placeholder=""
+              className="hidden"
+            // checked={true}
+            />
             <img
               src={ImagePath.checkedIcon}
               className="hidden absolute w-10 h-10 pointer-events-none"
             />
           </div>
-          <span className="text-black cursor-pointer dark:text-white font-['Poppins'] font-semibold xxs:text-[14px] ">
+          <span className="text-black cursor-pointer dark:text-white font-['Poppins'] font-semibold xxs:text-sm ">
             {" "}
             You agree to abide by the term of use and the privacy statement
           </span>
@@ -424,7 +509,7 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
         <div className="border border-black dark:border-white pb-1 rounded-xl mt-3 xxxs:w-full xxxs:mr-0">
           <Button
             className={
-              "bg-black dark:bg-white flex items-center font-bold justify-center  text-white dark:text-black border border-black dark:border-white w-full p-3 rounded-tl-[9px] rounded-tr-[9px] rounded-xl m-0 dark:border-1"
+              "bg-black dark:bg-white flex items-center font-bold justify-center font-bold text-white dark:text-black border border-black dark:border-white w-full p-3 rounded-tl-[9px] rounded-tr-[9px] rounded-xl m-0 dark:border-1"
             }
             text="Save Card"
             isLoading={isLoading}
@@ -434,6 +519,13 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
             }}
           />
         </div>
+        {/* {isError && (
+          <ErrorModal
+            message={errorMsg}
+            closeModal={closeErrorModal}
+            isOpen={isError}
+          />
+        )} */}
       </form>
     </>
   );

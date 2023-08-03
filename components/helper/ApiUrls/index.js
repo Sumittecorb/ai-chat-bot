@@ -1,12 +1,14 @@
 export const VERSION = "/api/v1/";
 
 
-export const BASE_URL = process.env.RESTURL_SESSIONS.BASE_URL
-export const STRIPE_KEY = process.env.RESTURL_SESSIONS.STRIPE_KEY
-export const REDIRECT_URL = process.env.RESTURL_SESSIONS.REDIRECT_URL
+// export const BASE_URL = process.env.RESTURL_SESSIONS.BASE_URL
+export const BASE_URL = "https://ai-chat-bot-v1nz.onrender.com/"
+// export const BASE_URL = "http://15.207.19.195:3001/"
+
 
 
 export const API_URL = {
+
 
   // -------  Auth -------
   SIGNUP: "user/auth/signup",
@@ -34,6 +36,8 @@ export const API_URL = {
 
   MESSAGE_COUNT : "user/message/count",
   CREATE_CHAT_SESSION:"user/message/session",
+  DELETE_CHAT_SESSION:"user/message/userMessageDelete?sessionId=",
+  MESSAGE_PDF:"user/message/userMessagePdf?sessionId=",
   CHAT_HISTORY:"user/message/chat-history",
   MESSAGE_HISTORY:"user/message/message-history"
   

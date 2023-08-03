@@ -1,5 +1,7 @@
 import Avatar from "../Avatar/page";
 import { ListNavigation } from "../LinkButton/page";
+import ThemeToggle from "../ThemeToggle/page";
+
 const Header = () => {
   return (
     <>

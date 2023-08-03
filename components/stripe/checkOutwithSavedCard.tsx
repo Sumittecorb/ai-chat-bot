@@ -1,3 +1,4 @@
+'use client'
 import React, { FC, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "../Button/page";
@@ -5,7 +6,6 @@ import { UserContext } from "../context";
 import { subscriptionService } from "../helper/services/subscriptionService";
 import { SESSION_TOKEN } from "../common/constant";
 import { getCook } from "../helper/cookies_setup";
-import { REDIRECT_URL } from "../helper/ApiUrls";
 
 interface CheckoutFormProps {
   isLoading?: boolean;
@@ -30,7 +30,7 @@ const PaymentWithSavedCard: FC<CheckoutFormProps> = ({
     if (isSecretKey) {
       const paymentRes = await stripe.confirmCardPayment(`${isSecretKey}`, {
         payment_method: `${selectedCard}`,
-        return_url: REDIRECT_URL,
+        return_url: "https://aichatbot-web.vercel.app/subscription",
       });
       if (paymentRes.paymentIntent?.status === "succeeded") {
         setIsLoading(false);
@@ -45,7 +45,7 @@ const PaymentWithSavedCard: FC<CheckoutFormProps> = ({
           session_token
         );
         if (response.code == 200) {
-          router.replace("/subscription");
+          window.location.href="/subscription";
         }
       }
     }

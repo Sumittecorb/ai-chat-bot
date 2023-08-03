@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-h1.subscriptionHeading {
-    position: relative;
+@layer base {
+    body {
+        @applydark: bg-gray-800 bg-white
+    }
 }
+
 
 h1.subscriptionHeading::before {
     content: "";
@@ -71,75 +74,6 @@ h1.subscriptionHeading::before {
     border: 1px solid #343734 !important;
     color: white !important;
 }
-/* .react-tel-input .flag-dropdown {
-    position: absolute !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    padding: 0 !important;
-    background:#343734 !important;
-    border: none !important;
-    border-radius: 3px 0 0 3px !important;
-}
-.react-tel-input .selected-flag:hover,
-.react-tel-input .selected-flag:focus {
-    background: #343734 !important;
-} */
-/* 
-.react-tel-input .selected-flag .flag {
-    z-index: 1;
-}
-
-.react-tel-input .form-control {
-    width: 80% !important;
-    position: absolute !important;
-    right: 0px !important;
-    padding-left: 10px !important;
-    font-weight: 700 !important;
-    font: 600 16px/20px Poppins !important;
-} */
-
-/* .react-tel-input .flag-dropdown {
-    height: 48px !important;
-    width: 17% !important;
-    border-radius: 8px !important;
-    background: #343734 !important;
-    border: none !important;
-}
- */
-
-
-/* .react-tel-input .selected-flag {
-    width: 100% !important;
-} */
-
-/* .react-tel-input .selected-flag .arrow.up {
-    display: none !important;
-} */
-
-/* .react-tel-input .selected-flag .arrow {
-    display: none !important;
-} */
-
-/* .react-tel-input .selected-flag {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    padding: 0px !important;
-    font: 600 16px/20px Poppins;
-    height: 50px;
-} */
-
-/* .react-tel-input .selected-flag:hover,
-.react-tel-input .selected-flag:focus {
-    border-radius: 8px !important;
-} */
-
-/* .special-label {
-    color: white !important;
-    margin-bottom: 10px !important;
-    display: none !important;
-} */
 
 @media screen and (max-width:575px) {
     .react-tel-input .form-control {

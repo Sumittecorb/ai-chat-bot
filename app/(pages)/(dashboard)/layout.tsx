@@ -16,7 +16,7 @@ export default function DashboardLayout({
   return (
     <Fragment>
       <Sidebar />
-      <main className="bg-[#f6f8fa] dark:bg-gradient-to-t from-[#202708] to-[#171717]  px-12 mobileView:px-6 py-10 md:min-h-screen md:w-[calc(100%-300px)] md:float-right h-[100%] mobileView:pt-14 mobileView:w-full mobileView:min-h-screen">
+      <main className="bg-lightBackground dark:bg-gradient-to-t from-gradientLeft to-gradientRight px-12 mobileView:px-6 py-10 md:min-h-screen md:w-[calc(100%-300px)] md:float-right h-[100%] mobileView:pt-14 mobileView:w-full mobileView:min-h-screen">
         {children}
       </main>
     </Fragment>

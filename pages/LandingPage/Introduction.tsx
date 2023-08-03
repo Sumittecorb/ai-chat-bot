@@ -8,14 +8,14 @@ import Button from "@/components/Button/page";
 const Introduction = () => {
   return (
     <>
-      <section className="bg-light-lightBackground dark:bg-gradient-to-br from-[#202708] to-[#171717] px-16 xs:px-8 py-10 xs:py-2">
+      <section className="bg-light-lightBackground dark:bg-gradient-to-br from-gradientLeft to-gradientRight px-16 xs:px-8 py-10 xs:py-2">
         <div className="grid grid-cols-5 gap-4 xs:grid-cols-1">
           <LeftToRightAnimate className="col-span-3 pt-20 lg:col-span-3 md:col-span-3 sm:col-span-3 xs:pt-10">
             <h1 className="text-black dark:text-white text-5xl font-['Poppins'] font-semibold xl:leading-tight lg:leading-tight md:leading-tight sm:leading-tight xl:text-5xl lg:text-4xl md:text-4xl sm:text-3xl xs:text-4xl xss:text-3xl ">
               Introduction to <br />
               Bot AI
             </h1>
-            <p className="text-black dark:text-white text-lg mt-5 font-light font-['Poppins'] lg:text-lg sm:text-[16px] xs:text-[15px]">
+            <p className="text-black dark:text-white text-lg mt-5 font-light font-['Poppins'] lg:text-lg sm:text-base xs:text-sm">
               Bot AI, or Artificial Intelligence Chatbot, represents a
               breakthrough in conversational agents. By leveraging sophisticated
               algorithms and NLP, these intelligent bots simulate human-like
@@ -32,7 +32,7 @@ const Introduction = () => {
               <div className="border border-black dark:border-white pb-1 rounded-xl mr-5 mt-3 xxxs:w-full xxxs:mr-0">
                 <Button
                   className={
-                    "bg-black dark:bg-white flex items-center justify-center text-white dark:text-black border border-black dark:border-white w-48 p-3 rounded-tl-[9px] rounded-tr-[9px] rounded-xl xxs:w-40 xxxs:w-full dark:m-[-1px] dark:border-1"
+                    "bg-black dark:bg-white flex items-center justify-center text-white dark:text-black border border-black dark:border-white w-48 p-3 rounded-tl-lg rounded-tr-lg rounded-xl xxs:w-40 xxxs:w-full dark:m-[-1px] dark:border-1"
                   }
                   text="Try NOW"
                 />
@@ -40,7 +40,7 @@ const Introduction = () => {
               <div className="border border-black dark:border-white pb-1 rounded-xl mr-5 mt-3 xxxs:w-full xxxs:mr-0">
                 <Button
                   className={
-                    "bg-white dark:bg-black flex items-center justify-center text-black dark:text-white border border-black dark:border-white w-48 p-3 rounded-tl-[9px] rounded-tr-[9px] rounded-xl xxs:w-40 xxxs:w-full dark:m-[-1px] dark:border-1"
+                    "bg-white dark:bg-black flex items-center justify-center text-black dark:text-white border border-black dark:border-white w-48 p-3 rounded-tl-lg rounded-tr-lg rounded-xl xxs:w-40 xxxs:w-full dark:m-[-1px] dark:border-1"
                   }
                   text="Start Chat"
                 />
