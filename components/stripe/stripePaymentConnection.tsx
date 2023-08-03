@@ -1,9 +1,12 @@
+'use client'
 import { loadStripe } from "@stripe/stripe-js";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import PaymentWithSavedCard from "./checkOutwithSavedCard";
 import { ElementsConsumer, Elements } from "@stripe/react-stripe-js";
-import { STRIPE_KEY } from "../helper/ApiUrls";
-const secret: any =STRIPE_KEY
+import { UserContext } from "../context";
+const secret: any =
+  "pk_test_51NNrKrSFPGceK1Mz303vBJkaxMgq3LGX6p2fbRo0PnycSIoiUsSgVwjTCBGJFY4BJrzH6YfKZev0mz3J1U8DgrhB00v55q5jkZ";
+
 const stripePromise = loadStripe(secret);
 interface StripConnectionProps {
   cards: any;
@@ -13,10 +16,14 @@ interface StripConnectionProps {
   clientSecret: any;
 }
 const StripPaymentConnection: FC<StripConnectionProps> = ({
-
+  cards,
+  setAddCard,
   clientSecret,
   selectedCard,
 }) => {
+  const contextMode: any = UserContext();
+  let customerId = contextMode;
+  console.log(clientSecret)
   return (
     <Elements stripe={stripePromise} options={{ clientSecret }}>
       <ElementsConsumer>

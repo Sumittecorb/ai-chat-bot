@@ -35,7 +35,7 @@ const Otp = () => {
           if (loginRes.code == 200) {
             setLoading(false)
             setCookies(SESSION_TOKEN, loginRes.data.token);
-            window.location.replace(Routes.chat.href);
+            window.location.href=Routes.chat.href;
           }
         }
       }
@@ -44,7 +44,7 @@ const Otp = () => {
 
   return (
     <AuthLayout>
-      <h3 className="text-black dark:text-white text-[16px] mt-5 leading-5 font-['Poppins']">
+      <h3 className="text-black dark:text-white text-base mt-5 leading-5 font-['Poppins']">
         Please enter OTP received on your registered mobile number
       </h3>
       <div className="w-full">
@@ -67,7 +67,7 @@ const Otp = () => {
           <div className="border border-black dark:border-white pb-1 rounded-xl mt-3 xxxs:w-full xxxs:mr-0">
             <Button
               className={
-                "bg-black dark:bg-white flex items-center font-bold justify-center text-white dark:text-black border border-black dark:border-white w-full p-3 rounded-tl-[9px] rounded-tr-[9px] rounded-xl m-0 dark:border-1"
+                "bg-black dark:bg-white flex items-center font-bold justify-center text-white dark:text-black border border-black dark:border-white w-full p-3 rounded-tl-lg rounded-tr-lg rounded-xl m-0 dark:border-1"
               }
               text="Verify"
               onClick={(e: any) => onSubmit(e)}

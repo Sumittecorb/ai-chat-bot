@@ -1,0 +1,155 @@
+import Avatar from "@/components/Avatar/page";
+import { messageChatHistory } from "@/components/helper/services/chat.services";
+import { ImagePath } from "@/components/Images/page";
+import {
+  ChatHistory,
+  ChatHistoryData,
+  ChatHistoryUpdateData,
+} from "@/typescript/interface/chat.interface";
+import { formattedDate } from "@/utils/methods/page";
+import React, { Fragment, useEffect, useState } from "react";
+
+const ChatHistory = () => {
+  const [hitory, setHistory] = useState<ChatHistoryData[]>([]);
+  useEffect(() => {
+    chatHistoryList();
+  }, []);
+  const chatHistoryList = async () => {
+    let chatHistory: ChatHistory = await messageChatHistory();
+    if ((chatHistory.code = 200)) {
+      setHistory(chatHistory.data);
+
+      const formattedData = chatHistory.data.reduce((acc: any, obj) => {
+        const date = formattedDate(obj.date);
+        if (!acc[date]) {
+          acc[date] = {
+            date,
+            newData: [],
+          };
+        }
+        acc[date].newData.push(obj);
+        return acc;
+      }, {});
+
+      const result = Object.values(formattedData);
+      console.log("result", result);
+    }
+  };
+  // const data = [
+  //   {
+  //     "_id": "649c226962d96326df4033b8",
+  //     "date": "2023-06-28",
+  //     "time": "05:37 PM",
+  //     "title": "React js setup"
+  //   },
+  //   {
+  //     "_id": "649c1b6b62d96326df403341",
+  //     "date": "2023-06-28",
+  //     "time": "05:07 PM"
+  //   },
+  //   {
+  //     "_id": "649c057962d96326df40325a",
+  //     "date": "2023-06-28",
+  //     "time": "03:33 PM",
+  //     "title": "Node setup"
+  //   },
+  //   {
+  //     "_id": "649c04fd62d96326df403252",
+  //     "date": "2023-06-28",
+  //     "time": "03:31 PM"
+  //   },
+  //   {
+  //     "_id": "649c040a62d96326df40324a",
+  //     "date": "2023-06-28",
+  //     "time": "03:27 PM"
+  //   },
+  //   {
+  //     "_id": "649be10d889665e7c17a7823",
+  //     "date": "2023-06-28",
+  //     "time": "12:58 PM"
+  //   },
+  //   {
+  //     "_id": "649bdf79889665e7c17a77ff",
+  //     "date": "2023-06-28",
+  //     "time": "12:51 PM"
+  //   },
+  //   {
+  //     "_id": "649bdf79889665e7c17a77faf",
+  //     "date": "2023-06-27",
+  //     "time": "12:51 PM"
+  //   }
+  // ];
+
+  // const formattedData = data.reduce((acc:any, obj) => {
+  //   const date = obj.date;
+  //   if (!acc[date]) {
+  //     acc[date] = {
+  //       date,
+  //       newData: []
+  //     };
+  //   }
+  //   acc[date].newData.push(obj);
+  //   return acc;
+  // }, {});
+
+  // const result = Object.values(formattedData);
+
+  // console.log(result);
+  return (
+    <Fragment>
+      {hitory.map((_data: ChatHistoryData) => {
+        const { _id, title } = _data;
+        if (!title) return null;
+        return (
+          <div className="py-3">
+            <h2 className="text-[#807474] dark:text-black mb-2 font-['Poppins'] tablet:text-sm">
+              {/* Today */}
+            </h2>
+            <button className="bg-[#2f2b2b] dark:bg-white text-white font-medium dark:text-black font-['Poppins'] w-full flex items-center justify-between h-14 px-5 rounded-xl tablet:px-3 tablet:h-10">
+              <div className="flex items-center">
+                <Avatar
+                  path={ImagePath.chatIcon}
+                  className="mr-3 w-7 tablet:w-4"
+                />
+                <span className="truncate tablet:text-[14px]">{title}</span>
+              </div>
+              <Avatar
+                path={"/images/downloadicon.svg"}
+                className="mr-3 w-7 tablet:w-4"
+              />
+            </button>
+          </div>
+        );
+      })}
+      {/* <div className="py-3">
+        <h2 className="text-[#807474] dark:text-black mb-2 font-['Poppins'] tablet:text-sm">
+          Today
+        </h2>
+        <button className="bg-[#2f2b2b] dark:bg-white text-white font-medium dark:text-black font-['Poppins'] w-full flex items-center justify-between h-14 px-5 rounded-xl tablet:px-3 tablet:h-10">
+          <div className="flex items-center">
+            <Avatar path={ImagePath.chatIcon} className="mr-3 w-7 tablet:w-4" />
+            <span className="truncate tablet:text-[14px]">
+              UI Design Process
+            </span>
+          </div>
+          <Avatar
+            path={"/images/downloadicon.svg"}
+            className="mr-3 w-7 tablet:w-4"
+          />
+        </button>
+      </div>
+      <div className="py-3">
+        <h2 className="text-[#807474] dark:text-black mb-2 font-['Poppins'] tablet:text-sm">
+          Previous7 Days
+        </h2>
+        <button className="bg-[#2f2b2b] dark:bg-white text-white font-medium dark:text-black font-['Poppins'] w-full flex items-center justify-between h-14 px-5 rounded-xl tablet:px-3 tablet:h-10">
+          <div className="flex items-center">
+            <Avatar path={ImagePath.chatIcon} className="mr-3 w-7 tablet:w-4" />
+            <span className="truncate tablet:text-[14px]">Ror Dev Basic</span>
+          </div>
+        </button>
+      </div> */}
+    </Fragment>
+  );
+};
+export default ChatHistory;

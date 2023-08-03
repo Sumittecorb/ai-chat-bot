@@ -15,6 +15,7 @@ export const SkeletonCardList = () => {
             value="cards"
             className="hidden peer"
           />
+          {/* <Skeleton height={20} /> */}
           <div className="flex items-center ">
             <div className="ml-4 font-['Poppins'] ">
               <h3 className="ml-3 text-black dark:text-white ">

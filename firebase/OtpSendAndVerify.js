@@ -5,6 +5,7 @@ import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth
 // import { UserContext } from '../Layout/checkUser';
 //*************************** send otp function ******************************************************8 */
 export const sendOtp = async (phoneNo) => {
+  console.log(phoneNo, "phoneNo");
   const auth = getAuth(app);
   console.log("auth",auth);
   window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {

@@ -1,4 +1,5 @@
 import Avatar from "@/components/Avatar/page";
+import { LightImage } from "@/components/Images/page";
 import React from "react";
 
 const ChatHeader = ({
@@ -8,8 +9,9 @@ const ChatHeader = ({
   title?: string;
   chatLoad: boolean;
 }) => {
+
   return (
-    <div className="flex items-center border-b-2 border-black dark:border-white pb-5">
+    <div className="flex items-center border-b-2 border-black dark:border-white pb-5 mt-12">
       <div className="w-14 h-14 tablet:w-9 tablet:h-9">
         <Avatar
           path={"/images/sidebarIcons/botprofile.svg"}

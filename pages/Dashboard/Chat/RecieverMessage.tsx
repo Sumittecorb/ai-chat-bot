@@ -1,3 +1,5 @@
+'use client'
+
 import Avatar from "@/components/Avatar/page";
 import React from "react";
 

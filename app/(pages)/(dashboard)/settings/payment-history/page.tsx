@@ -35,14 +35,14 @@ const PaymentHistory = () => {
           <SkeletonPaymentCard key={index} />
         ))
       ) : (
-        <div className="bg-white dark:bg-[#232323] px-5 py-5 mt-10 w-[90%] xl:w-[90%] lg:w-[90%] md:w-[100%] mobileView:w-[100%] rounded-2xl">
+        <div className="bg-white dark:bg-themeBg px-5 py-5 mt-10 w-[90%] xl:w-[90%] lg:w-[90%] md:w-full mobileView:w-full rounded-2xl">
           <h1 className="text-black dark:text-white font-['Poppins'] text-xl xs:text-xl xss:text-md mb-5">
             Payment History
           </h1>
           <div className="py-4 overflow-x-auto">
             <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
               <table className="min-w-full leading-normal whitespace-nowrap">
-                <thead className="bg-[#b9bcb56b] dark:bg-[#343734]">
+                <thead className="bg-lightBorder dark:bg-inputbg">
                   <tr>
                     <th className="px-5 py-3 text-left text-md font-semibold text-black dark:text-white  tracking-wider">
                       Invoice Id
@@ -63,7 +63,7 @@ const PaymentHistory = () => {
                 </thead>
                 <tbody>
                   {Payment_history.map((data, index) => {
-                    let { paymentId, amount, cardType,subscriptionType,subscriptionStartDate } = data;
+                    let { paymentId, amount, cardType, subscriptionType, subscriptionStartDate } = data;
                     return (
                       <tr>
                         <td className="px-5 py-5 text-md text-black dark:text-white ">
@@ -91,7 +91,7 @@ const PaymentHistory = () => {
           <div className="flex justify-end mt-5">
             <Button
               className={
-                "bg-[#343734] flex items-center justify-center w-28 px-5 py-2 font-bold dark:bg-white text-white dark:text-black font-['Poppins'] border border-white dark:border-1 dark:border-[#343734]"
+                "bg-inputbg flex items-center justify-center w-28 px-5 py-2 font-bold dark:bg-white text-white dark:text-black font-['Poppins'] border border-white dark:border-1 dark:border-inputbg"
               }
               text="More"
             />

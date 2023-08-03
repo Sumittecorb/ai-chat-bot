@@ -12,7 +12,7 @@ const Subscription = () => {
     <DashboardHeading heading="Subscription">
       <div className="grid grid-cols-5 gap-4 xs:grid-cols-1 mt-8">
         <LeftToRightAnimate className="col-span-3 lg:col-span-3 md:col-span-3 sm:col-span-3">
-          <p className="text-black dark:text-white text-2xl mt-5 font-light font-['Poppins'] lg:text-[22px] md:text-xl sm:text-lg xs:text-[20px] xxs:text-[18px] xxxs:text-[16px]">
+          <p className="text-black dark:text-white text-2xl mt-5 font-light font-['Poppins'] lg:text-xl md:text-xl sm:text-lg xs:text-xl xxs:text-lg xxxs:text-base">
             Get unlimited chat with our ai bot and get your all our soluitions
             without any issue
           </p>

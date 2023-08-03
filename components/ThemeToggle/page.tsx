@@ -1,9 +1,12 @@
 "use client";
 import useDarkMode from "@/utils/useDarkMode";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DarkImage, ImagePath, LightImage } from "../Images/page";
+import { useTheme } from "next-themes";
 const ThemeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useDarkMode();
+  const { systemTheme, theme, setTheme } = useTheme();
+
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
@@ -15,9 +18,25 @@ const ThemeToggle = () => {
             Dark
           </h1>
           <div className="relative">
-            <input onClick={toggleDarkMode} type="checkbox" className="sr-only peer" />
-            <img src={LightImage.whiteToggle} className="h-12 w-20 peer-checked:hidden" />
-            <img src={DarkImage.darkToggle} className="hidden h-12 w-20 peer-checked:block" />
+            <input
+              onClick={() =>
+                theme == "dark" ? setTheme("light") : setTheme("dark")
+              }
+              type="checkbox"
+              className="sr-only"
+            />
+            {theme === "light" && (
+              <img
+                src={LightImage.whiteToggle}
+                className="h-12 w-20 "
+              />
+            )}
+            {theme === "dark" && (
+              <img
+                src={DarkImage.darkToggle}
+                className=" h-12 w-20"
+              />
+            )}{" "}
           </div>
           <h1 className="text-black dark:text-white font-['Poppins'] text-lg xs:text-lg xss:text-md ml-3">
             Light

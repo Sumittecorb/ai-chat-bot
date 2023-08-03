@@ -19,8 +19,9 @@ import PhoneInput from "react-phone-input-2";
 import { isValidNumber } from "libphonenumber-js";
 import { UserContext } from "@/components/context";
 import { SkeletonCard } from "@/components/skeltonCard/profileCard";
-import { ImagePath, LightImage } from "@/components/Images/page";
+import { DarkImage, ImagePath, LightImage } from "@/components/Images/page";
 import PhoneNumber from "@/components/PhoneInput/page";
+import { useTheme } from "next-themes";
 
 type ProfileForm = {
   name: string;
@@ -36,6 +37,7 @@ const Profile = () => {
   const [image, setImage] = useState<ArrayBuffer[] | null>();
   const [imageURL, setImageUrl] = useState("null");
   const [isLoading, setLoading] = useState(true);
+  const { systemTheme, theme, setTheme } = useTheme();
   const router = useRouter();
   const session_token = getCook(SESSION_TOKEN);
   let userData: any = UserContext();
@@ -51,6 +53,7 @@ const Profile = () => {
     getValues,
     setError,
     clearErrors,
+
     formState: { errors },
     control,
   } = useForm<ProfileForm>({
@@ -58,19 +61,18 @@ const Profile = () => {
   });
   useEffect(() => {
     if (userData) {
-      let { email, phoneNumber, name, countryCode, gender, image } = userData.userData;
-      setLoading(false)
+      let { email, phoneNumber, name, countryCode, gender, image } =
+        userData.userData;
+      setLoading(false);
       setValue("name", name);
       setValue("phoneNumber", phoneNumber);
       setValue("countryCode", countryCode);
       setValue("gender", gender);
       setValue("email", email);
-      setImageUrl(image)
-      setImage(image)
+      setImageUrl(image);
+      setImage(image);
     }
   }, [userData]);
-
-
 
   const onSubmit = async (data: ProfileForm) => {
     let { email } = userData.userData;
@@ -88,7 +90,6 @@ const Profile = () => {
       const request = new XMLHttpRequest();
       request.onreadystatechange = () => {
         if (request.readyState === 4 && request.status === 200) {
-
         }
       };
       formdata.append("name", data.name);
@@ -122,21 +123,18 @@ const Profile = () => {
 
   const handleImageChange = (e: any) => {
     e.preventDefault();
-    let type = e.target.files[0].type
+    let type = e.target.files[0].type;
     if (e.target.files && e.target.files[0]) {
-      setImageUrl(
-        URL.createObjectURL(e.target.files[0]),
-      );
+      setImageUrl(URL.createObjectURL(e.target.files[0]));
     }
     let file = e.target.files[0];
     let reader = new FileReader();
     reader.onloadend = function () {
       let imagePreview: any = reader.result as string;
-      setImage(imagePreview)
-    }
+      setImage(imagePreview);
+    };
     reader.readAsDataURL(file);
-
-  }
+  };
 
   const handleChange = (phone: any, phoneData: any, x: any) => {
     let pNumber = phone;
@@ -181,7 +179,7 @@ const Profile = () => {
   };
   let phone: any = getValues("phoneNumber");
   let code: any = getValues("countryCode");
-  let Numer = code + phone
+  let Number = code + phone;
   let skeletonCards = Array(1).fill(0);
 
   return (
@@ -189,7 +187,7 @@ const Profile = () => {
       {isLoading ? (
         skeletonCards.map((index: number) => <SkeletonCard key={index} />)
       ) : (
-        <div className="bg-white dark:bg-[#232323] px-5 py-5 mt-10 w-[90%] xl:w-[90%] lg:w-[90%] md:w-[100%] mobileView:w-[100%] rounded-2xl">
+        <div className="bg-white dark:bg-themeBg px-5 py-5 mt-10 w-[90%] xl:w-[90%] lg:w-[90%] md:w-[100%] mobileView:w-[100%] rounded-2xl">
           <div className="flex items-center justify-between">
             <h1 className="text-black dark:text-white font-['Poppins'] text-xl xs:text-xl xxs:text-base mb-5">
               Edit Profile
@@ -201,7 +199,12 @@ const Profile = () => {
                 }}
                 className="flex items-center text-black dark:text-white font-['Poppins'] text-lg xs:text-lg xxs:text-base mb-5"
               >
-                <Avatar path={LightImage.whiteEditIcon} className="w-4" />
+                {theme === "light" && (
+                  <Avatar path={DarkImage.darkEdit} className="w-4" />
+                )}
+                {theme === "dark" && (
+                  <Avatar path={LightImage.whiteEditIcon} className="w-4" />
+                )}{" "}
                 <span className="ml-3">Edit</span>
               </button>
             )}
@@ -240,15 +243,21 @@ const Profile = () => {
                 placeholder="Arihant Singh"
                 className="w-full placeholder-black dark:placeholder-white rounded-md font-['Poppins']
                           leading-tight py-2 px-10 focus:outline-none text-black dark:text-white  
-                          focus:shadow-outline h-12 bg-white dark:bg-[#343734] border-2 dark:border-none border-[#b9bcb56b] xxs:text-[14px]"
+                          focus:shadow-outline h-12 bg-white dark:bg-inputbg border-2 dark:border-none border-lightBorder xxs:text-sm"
                 readOnly={edit}
                 register={register("name")}
                 name="name"
               />
-              <Avatar
-                path={LightImage.whiteUserIcon}
-                className="absolute w-4 bottom-[13px] left-2"
-              />
+              {theme === "light" && (
+                <Avatar path={DarkImage.darkUser}
+                  className="absolute w-4 bottom-3 left-2" />
+              )}
+              {theme === "dark" && (
+                <Avatar
+                  path={LightImage.whiteUserIcon}
+                  className="absolute w-4 bottom-3 left-2"
+                />
+              )}{" "}
             </div>
             <div className="mb-7 relative">
               <Input
@@ -256,22 +265,30 @@ const Profile = () => {
                 placeholder="Email"
                 className="w-full placeholder-black dark:placeholder-white rounded-md font-['Poppins']
                           leading-tight py-2 px-10 focus:outline-none  text-black dark:text-white 
-                          focus:shadow-outline h-12 bg-white dark:bg-[#343734] border-2 dark:border-none border-[#b9bcb56b] xxs:text-[14px]"
+                          focus:shadow-outline h-12 bg-white dark:bg-inputbg border-2 dark:border-none border-lightBorder xxs:text-sm"
                 readOnly={edit}
                 register={register("email")}
                 name="name"
               />
+              {theme === "light" && (
+                <Avatar path={DarkImage.darkMail}
+                  className="absolute w-4 bottom-3 left-2" />
+              )}
+              {theme === "dark" && (
               <Avatar
                 path={LightImage.whiteMailIcon}
-                className="absolute w-4 bottom-[13px] left-2"
+                className="absolute w-4 bottom-4 left-2"
               />
+              )}{" "}
             </div>
             <div className="mb-7 relative ">
-            <PhoneNumber
-              {...register("phoneNumber", phoneNumberValidation)}
-              onChange={handleChange}
-              countryCodeEditable={true}
-              prefix="+"
+              <PhoneNumber
+                {...register("phoneNumber", phoneNumberValidation)}
+                onChange={handleChange}
+                countryCodeEditable={true}
+                prefix="+"
+                disabled={true}
+                value={Number}
               />
             </div>
             <div className="mb-7">
@@ -352,7 +369,7 @@ const Profile = () => {
             <div className="border border-black dark:border-white pb-1 rounded-xl mt-3 xxxs:w-full">
               <Button
                 className={
-                  "bg-black dark:bg-white flex items-center justify-center font-bold text-white dark:text-black font-['Poppins'] border border-black dark:border-white w-full p-3 rounded-tl-[9px] rounded-tr-[9px] rounded-xl dark:m-[-1px] dark:border-1"
+                  "bg-black dark:bg-white flex items-center justify-center font-bold text-white dark:text-black font-['Poppins'] border border-black dark:border-white w-full p-3 rounded-tl-lg rounded-tr-lg rounded-xl dark:m-[-1px] dark:border-1"
                 }
                 text="Update"
                 isLoading={isLoading}
